@@ -3,7 +3,7 @@ var fs = require("fs"),
 	path = require("path"),
 	exec = require("child_process").exec;
 
-var gpioBin = "gpio -g",
+var gpioBin = "gpio",
 	sysFsPathOld = "/sys/devices/virtual/gpio", // pre 3.18.x kernel
 	sysFsPathNew = "/sys/class/gpio", // post 3.18.x kernel
 	sysFsPath;
@@ -147,7 +147,7 @@ var gpio = {
 		pinNumber = sanitizePinNumber(pinNumber);
 		direction = sanitizeDirection(direction);
 
-		exec(gpioBin + " mode " + pinMapping[pinNumber] + " " + direction, handleExecResponse("direction set ", pinNumber, function(err) {
+		exec(gpioBin + " -g " + " mode " + pinMapping[pinNumber] + " " + direction, handleExecResponse("direction set ", pinNumber, function(err) {
 			if (err) return (callback || noop)(err);
 		}));
 	},
@@ -171,7 +171,7 @@ var gpio = {
 	read: function(pinNumber, callback) {
 		pinNumber = sanitizePinNumber(pinNumber);
 
-		exec(gpioBin + " read " + pinMapping[pinNumber], function(err, data) {
+		exec(gpioBin + " -g " + " read " + pinMapping[pinNumber], function(err, data) {
 			if (err) return (callback || noop)(err);
 
 			(callback || noop)(null, parseInt(data, 10));
@@ -183,7 +183,7 @@ var gpio = {
 
 		value = !!value ? "1" : "0";
 
-		exec(gpioBin + " write " + pinMapping[pinNumber] + " " + value, callback);
+		exec(gpioBin + " -g " + " write " + pinMapping[pinNumber] + " " + value, callback);
 	}
 };
 
