@@ -22,14 +22,14 @@ if (fs.existsSync(sysFsPathNew)) {
 rev = parseInt(rev, 16) < 3 ? 1 : 2; // http://elinux.org/RPi_HardwareHistory#Board_Revision_History
 
 var pinMapping = {
-	"3": 2,
-	"5": 3,
+	"3": 0,
+	"5": 1,
 	"7": 4,
 	"8": 14,
 	"10": 15,
 	"11": 17,
 	"12": 18,
-	"13": 27,
+	"13": 21,
 	"15": 22,
 	"16": 23,
 	"18": 24,
