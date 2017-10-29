@@ -3,7 +3,7 @@ var fs = require("fs"),
 	path = require("path"),
 	exec = require("child_process").exec;
 
-var gpioAdmin = "gpio-admin",
+var gpioBin = "gpio -g",
 	sysFsPathOld = "/sys/devices/virtual/gpio", // pre 3.18.x kernel
 	sysFsPathNew = "/sys/class/gpio", // post 3.18.x kernel
 	sysFsPath;
@@ -136,7 +136,7 @@ var gpio = {
 
 		options = sanitizeOptions(options);
 
-		exec(gpioAdmin + " export " + pinMapping[pinNumber] + " " + options.pull, handleExecResponse("open", pinNumber, function(err) {
+		exec(gpioBin + " export " + pinMapping[pinNumber] + " " + options.direction, handleExecResponse("open", pinNumber, function(err) {
 			if (err) return (callback || noop)(err);
 
 			gpio.setDirection(pinNumber, options.direction, callback);
@@ -147,7 +147,9 @@ var gpio = {
 		pinNumber = sanitizePinNumber(pinNumber);
 		direction = sanitizeDirection(direction);
 
-		fs.writeFile(sysFsPath + "/gpio" + pinMapping[pinNumber] + "/direction", direction, (callback || noop));
+		exec(gpioBin + " mode " + pinMapping[pinNumber] + " " + direction, handleExecResponse("direction set ", pinNumber, function(err) {
+			if (err) return (callback || noop)(err);
+		}));
 	},
 
 	getDirection: function(pinNumber, callback) {
@@ -163,13 +165,13 @@ var gpio = {
 	close: function(pinNumber, callback) {
 		pinNumber = sanitizePinNumber(pinNumber);
 
-		exec(gpioAdmin + " unexport " + pinMapping[pinNumber], handleExecResponse("close", pinNumber, callback || noop));
+		exec(gpioBin + " unexport " + pinMapping[pinNumber], handleExecResponse("close", pinNumber, callback || noop));
 	},
 
 	read: function(pinNumber, callback) {
 		pinNumber = sanitizePinNumber(pinNumber);
 
-		fs.readFile(sysFsPath + "/gpio" + pinMapping[pinNumber] + "/value", function(err, data) {
+		exec(gpioBin + " read " + pinMapping[pinNumber], function(err, data) {
 			if (err) return (callback || noop)(err);
 
 			(callback || noop)(null, parseInt(data, 10));
@@ -181,7 +183,7 @@ var gpio = {
 
 		value = !!value ? "1" : "0";
 
-		fs.writeFile(sysFsPath + "/gpio" + pinMapping[pinNumber] + "/value", value, "utf8", callback);
+		exec(gpioBin + " write " + pinMapping[pinNumber] + " " + value, callback);
 	}
 };
 
