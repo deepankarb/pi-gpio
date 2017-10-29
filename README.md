@@ -1,7 +1,12 @@
 pi-gpio
 =======
 
-pi-gpio is a simple node.js based library to help access the GPIO of the Raspberry Pi (Debian Wheezy). It's modelled loosely around the built-in ``fs`` module.
+pi-gpio is a simple node.js based library to help access the GPIO of the Raspberry Pi (Debian Wheezy). It's modelled loosely around the built-in ``fs`` module.  
+It works with:
+* original Raspberry Pi (A and B)
+* model B revision 2 boards
+* Raspberry Pi Model A+
+* Raspberry Pi Model B+
 
 ```javascript
 var gpio = require("pi-gpio");
@@ -13,25 +18,29 @@ gpio.open(16, "output", function(err) {		// Open pin 16 for output
 });
 ```
 
-## Unmaintained
+## How you can help
 
-This project is unmaintained, and is up for adoption. If anyone wants to take over the development of this project, please drop me a line, and we'll take it from there. Another way to help would be to review the pull requests and test them on a Pi for correctness.
+Ways you can help:
+
+    - Review the pull requests and test them on a Pi for correctness.
+    - Report Bugs.
+    - Fix a bug or add something awesome, Send a pull request.
 
 ## About the pin configuration
 
 This couldn't have been more confusing. Raspberry Pi's physical pins are not laid out in any particular logical order. Most of them are given the names of the pins of the Broadcom chip it uses (BCM2835). There isn't even a logical relationship between the physical layout of the Raspberry Pi pin header and the Broadcom chip's pinout. The OS recognizes the names of the Broadcom chip and has nothing to do with the physical pin layout on the Pi. To add to the fun, the specs for the Broadcom chip are nearly impossible to get!
 
-This library simplifies all of this (hopefully), by abstracting away the Broadcom chip details. You only need to refer to the pins as they are on the physical pin layout on the Raspberry PI. For your reference, the pin layout follows. The cells with the grey background represent the pins, with P1 at the top left.
+This library simplifies all of this (hopefully), by abstracting away the Broadcom chip details. You only need to refer to the pins as they are on the physical pin layout on the Raspberry PI. For your reference, the pin layout follows. All the pins marked "GPIO" can be used with this library, using pin numbers as below.
 
 <table>
 	<tr>
 		<td>
 			P1 - 3.3v
 		</td>
-		<td style="background: #ddd">
+		<td>
 			1
 		</td>
-		<td style="background: #ddd">
+		<td>
 			2
 		</td>
 		<td>
@@ -42,10 +51,10 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			I2C SDA
 		</td>
-		<td style="background: #ddd">
+		<td>
 			3
 		</td>
-		<td  style="background: #ddd">
+		<td >
 			4
 		</td>
 		<td>
@@ -56,10 +65,10 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			I2C SCL
 		</td>
-		<td style="background: #ddd">
+		<td>
 			5
 		</td>
-		<td style="background: #ddd">
+		<td>
 			6
 		</td>
 		<td>
@@ -67,13 +76,13 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		</td>
 	</tr>
 	<tr>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
-		<td style="background: #ddd">
+		<td>
 			7
 		</td>
-		<td style="background: #ddd">
+		<td>
 			8
 		</td>
 		<td>
@@ -84,10 +93,10 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			--
 		</td>
-		<td style="background: #ddd">
+		<td>
 			9
 		</td>
-		<td style="background: #ddd">
+		<td>
 			10
 		</td>
 		<td>
@@ -95,27 +104,27 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		</td>
 	</tr>
 	<tr>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
-		<td style="background: #ddd">
+		<td>
 			11
 		</td>
-		<td style="background: #ddd">
+		<td>
 			12
 		</td>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
 	</tr>
 	<tr>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
-		<td style="background: #ddd">
+		<td>
 			13
 		</td>
-		<td style="background: #ddd">
+		<td>
 			14
 		</td>
 		<td>
@@ -123,16 +132,16 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		</td>
 	</tr>
 	<tr>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
-		<td style="background: #ddd">
+		<td>
 			15
 		</td>
-		<td style="background: #ddd">
+		<td>
 			16
 		</td>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
 	</tr>
@@ -140,13 +149,13 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			--
 		</td>
-		<td style="background: #ddd">
+		<td>
 			17
 		</td>
-		<td style="background: #ddd">
+		<td>
 			18
 		</td>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
 	</tr>
@@ -154,10 +163,10 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			SPI MOSI
 		</td>
-		<td style="background: #ddd">
+		<td>
 			19
 		</td>
-		<td style="background: #ddd">
+		<td>
 			20
 		</td>
 		<td>
@@ -168,13 +177,13 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			SPI MISO
 		</td>
-		<td style="background: #ddd">
+		<td>
 			21
 		</td>
-		<td style="background: #ddd">
+		<td>
 			22
 		</td>
-		<td style="background: #90cf4d">
+		<td>
 			GPIO
 		</td>
 	</tr>
@@ -182,10 +191,10 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			SPI SCLK
 		</td>
-		<td style="background: #ddd">
+		<td>
 			23
 		</td>
-		<td style="background: #ddd">
+		<td>
 			24
 		</td>
 		<td>
@@ -196,19 +205,120 @@ This library simplifies all of this (hopefully), by abstracting away the Broadco
 		<td>
 			--
 		</td>
-		<td style="background: #ddd">
+		<td>
 			25
 		</td>
-		<td style="background: #ddd">
+		<td>
 			26
 		</td>
 		<td>
 			SPI CE1
 		</td>
 	</tr>
+	<tr>
+		<td colspan="4">Model A+ and Model B+ additional pins</td>
+	</tr>
+	<tr>
+		<td>
+			ID_SD
+		</td>
+		<td>
+			27
+		</td>
+		<td>
+			28
+		</td>
+		<td>
+			ID_SC
+		</td>
+	</tr>
+	<tr>
+		<td>
+			GPIO
+		</td>
+		<td>
+			29
+		</td>
+		<td>
+			30
+		</td>
+		<td>
+			--
+		</td>
+	</tr>
+	<tr>
+		<td>
+			GPIO
+		</td>
+		<td>
+			31
+		</td>
+		<td>
+			32
+		</td>
+		<td>
+			GPIO
+		</td>
+	</tr>
+	<tr>
+		<td>
+			GPIO
+		</td>
+		<td>
+			33
+		</td>
+		<td>
+			34
+		</td>
+		<td>
+			--
+		</td>
+	</tr>
+	<tr>
+		<td>
+			GPIO
+		</td>
+		<td>
+			35
+		</td>
+		<td>
+			36
+		</td>
+		<td>
+			GPIO
+		</td>
+	</tr>
+	<tr>
+		<td>
+			GPIO
+		</td>
+		<td>
+			37
+		</td>
+		<td>
+			38
+		</td>
+		<td>
+			GPIO
+		</td>
+	</tr>
+	<tr>
+		<td>
+			--
+		</td>
+		<td>
+			39
+		</td>
+		<td>
+			40
+		</td>
+		<td>
+			GPIO
+		</td>
+	</tr>
 </table>
 
-That gives you several GPIO pins to play with: pins 7, 11, 12, 13, 15, 16, 18 and 22. You should provide these physical pin numbers to this library, and not bother with what they are called internally. Easy-peasy.
+That gives you several GPIO pins to play with: pins 7, 11, 12, 13, 15, 16, 18 and 22 (with A+ and B+ giving 29, 31, 32, 33, 35, 37, 38 and 40). You should provide these physical pin numbers to this library, and not bother with what they are called internally. Easy-peasy.
 
 ## Installation
 
@@ -236,14 +346,14 @@ That's it!
 
 ## Usage
 
-### .open(pinNumber, [direction = "output"], [callback])
+### .open(pinNumber, [options], [callback])
 
 Aliased to ``.export``
 
 Makes ``pinNumber`` available for use. 
 
 * ``pinNumber``: The pin number to make available. Remember, ``pinNumber`` is the physical pin number on the Pi. 
-* ``direction``: (Optional) Direction can either be ``input`` or ``output``, depending on what you want to do with the pin. You could alternatively use ``in`` or ``out``. Default: ``output``.
+* ``options``: (Optional) Should be a string, such as ``input`` or ``input pullup``. You can specify whether the pin direction should be `input` or `output` (or `in` or `out`). You can additionally set the internal pullup / pulldown resistor by sepcifying `pullup` or `pulldown` (or `up` or `down`). If options isn't provided, it defaults to `output`. If a direction (`input` or `output`) is not specified (eg. only `up`), then the direction defaults to `output`.
 * ``callback``: (Optional) Will be called when the pin is available for use. May receive an error as the first argument if something went wrong.
 
 ### .close(pinNumber, [callback])
